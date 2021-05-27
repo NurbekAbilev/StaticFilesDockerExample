@@ -79,7 +79,7 @@ ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 EXPOSE 80
 
 # PHP extensions
-RUN apt-get install -y php7.0-gd
+RUN apt-get install -y php7.4-gd
 
 # Set supervisor to manage container processes
 ENTRYPOINT ["/usr/bin/supervisord"]
