@@ -17,4 +17,5 @@ docker-compose up -d
 docker-compose exec app composer install
 sudo chown -hR www-data:www-data src/storage/logs/
 cp src/.env.example src/.env
+docker-compose exec app php artisan migrate
 ```
