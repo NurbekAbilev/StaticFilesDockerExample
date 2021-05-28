@@ -15,4 +15,6 @@ git clone https://github.com/NurbekAbilev/ticketon
 cd ticketon/src
 docker-compose up -d
 docker-compose exec app composer install
+sudo chown -hR www-data:www-data logs/
+
 ```
