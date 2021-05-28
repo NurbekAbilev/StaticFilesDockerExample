@@ -42,33 +42,18 @@ $router->post('/upload', function (\Illuminate\Http\Request $request) use ($rout
         }
     }
 
-    dd($uploadedFile->get());
+    return redirect('/');
 });
 
-$router->get('/test', function (\Illuminate\Http\Request $request) use ($router) {
-    $collection = \App\Models\Image::query()->get();
+$router->get('/test/{id}', function (\Illuminate\Http\Request $request, $id) use ($router) {
+    $image = \App\Models\Image::query()->where('id', $id)->get()->first();
 
-    $image = $collection[0];
-//    return response()->getLastModified()
-//    echo $image->image;
-    $headers = ['Content-Type' => 'image/png'];
-//    $response = new BinaryFileResponse($image->image, 200, $headers);
-//    return $response;
-
-    try{
-
-        $manager = new ImageManager(['driver' => 'gd']);
-        $img = $manager->make($image->image);
-
-        $response = new Response($img);
-
-//        $response->header('Content-Type', 'image/png');
-
-        return $response;
-
-    }catch (\Throwable $e) {
-        dd($e);
+    if(!$image){
+        abort(404);
     }
 
-//    echo print_r($collection,true);
+    $manager = new ImageManager(['driver' => 'gd']);
+    $img = $manager->make($image->image);
+
+    return $img->response();
 });
