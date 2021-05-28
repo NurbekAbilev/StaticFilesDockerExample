@@ -25,21 +25,31 @@ $router->post('/upload', function (\Illuminate\Http\Request $request) use ($rout
     if($request->hasFile('file')) {
         $uploadedFile = $request->file('file');
 
-        $image = new \App\Models\Image();
-        $image->name = $uploadedFile->getFilename();
-        $image->image = $uploadedFile->get();
+        $manager = new ImageManager(['driver' => 'gd']);
 
-        $manager = new ImageManager(array('driver' => 'imagick'));
-//        $img = Image::make(Input::file('photo'));
+        $img = $manager->make($uploadedFile);
 
+        $width = $img->width() / 2;
+        $height = $img->height() / 2;
 
+        $img1 = clone $img;
+        $img2 = clone $img;
+        $img3 = clone $img;
+        $img4 = clone $img;
 
+        $img1->crop($width, $height, 0, 0);
+        $img2->crop($width, $height, $width, 0);
+        $img3->crop($width, $height, 0, $height);
+        $img4->crop($width, $height, $width, $height);
 
-        try{
+        $images = [$img1, $img2, $img3, $img4];
+
+        foreach ($images as $ind => $img) {
+            $image = new \App\Models\Image();
+            $image->name = $uploadedFile->getFilename() . $ind;
+            $image->image = (string) $img->stream();
+
             $image->save();
-
-        }catch (Exception $e) {
-            dd($e);
         }
     }
 
