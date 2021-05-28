@@ -14,10 +14,11 @@
 */
 
 use Intervention\Image\ImageManager;
-use Intervention\Image\Response;
 
 $router->get('/', function () use ($router) {
-    return view('greetings');
+    return view('greetings', [
+        'images' => \App\Models\Image::all()
+    ]);
 });
 
 $router->post('/upload', function (\Illuminate\Http\Request $request) use ($router) {
