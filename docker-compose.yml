@@ -8,6 +8,7 @@ services:
     environment:
       - MYSQL_DATABASE=appdb
       - MYSQL_USER=user
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
     restart: unless-stopped
     ports:
