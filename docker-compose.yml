@@ -6,18 +6,14 @@ services:
     container_name: mysql
     hostname: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
       - MYSQL_DATABASE=appdb
       - MYSQL_USER=user
-      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_PASSWORD=root
     restart: unless-stopped
     ports:
       - 127.0.0.1:3306:3306
     volumes:
       - mysql-data:/var/lib/mysql
-    secrets:
-      - db_root_password
-      - db_password
 
   app:
     build: .
@@ -30,12 +26,6 @@ services:
       - "80:80"
     depends_on:
       - mysql
-
-secrets:
-  db_root_password:
-    file: db_root_password.txt
-  db_password:
-    file: db_password.txt
 
 volumes:
   mysql-data:
