@@ -19,3 +19,7 @@ sudo chown -hR www-data:www-data src/storage/logs/
 cp src/.env.example src/.env
 docker-compose exec app php artisan migrate
 ```
+
+![test-image](https://user-images.githubusercontent.com/38177308/120010836-6eb73c00-bfff-11eb-95d6-b502ad0c62a5.jpg)
+
+![test-image2](https://user-images.githubusercontent.com/38177308/120011054-b1791400-bfff-11eb-8199-e34a4f8210e4.jpg)
